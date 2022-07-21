@@ -1,3 +1,15 @@
-body {
-  
+.main {
+  display: grid;
+  place-items: center;
+}
+
+.main .board {
+  width: 300px;
+  height: 300px;
+  border-spacing: 0px;
+  border: 1px solid black;
+}
+
+td {
+  border: 1px solid black;
 }
