@@ -6,8 +6,11 @@ const playerTwo: string = "O";
 
 for(let row of boardRows) {
 
+  const cellCollection: HTMLCollection = row.children;
+
+  for(let cell of cellCollection) {
+    console.log(cell)
+  }
 
 }
 
-
-console.log(boardRows);
