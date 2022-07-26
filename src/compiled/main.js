@@ -1,16 +1,29 @@
 "use strict";
 const board = document.querySelector(".board");
+console.log(board);
 const startButton = document.querySelector(".start-game");
 const playerOne = "X";
 const playerTwo = "O";
-const isPlayerOnePlaying = false;
-const isPlayerTwoPlaying = false;
+let isPlayerOnePlaying = false;
+let isPlayerTwoPlaying = false;
 let isInGameMode = false;
+const ;
 //children should have a variable of its own 
-for (let { children } of board.rows) {
-    for (let cell of children) {
-        cell.addEventListener("click", () => {
+for (let row of board.rows) {
+    for (let cell of row.children) {
+        const typedCell = cell;
+        typedCell.style.color = "red";
+        typedCell.style.textAlign = "center";
+        typedCell.addEventListener("click", () => {
             if (isInGameMode) {
+                if (!isPlayerOnePlaying) {
+                    isPlayerOnePlaying = true;
+                    typedCell.innerText = playerOne;
+                }
+                else {
+                    isPlayerTwoPlaying = true;
+                    typedCell.innerText = playerTwo;
+                }
             }
         });
     }
@@ -19,12 +32,8 @@ startButton.onclick = () => {
     const gameStartedParagraph = document.createElement("p");
     if (isInGameMode) {
         const shouldGameEnd = confirm("Do you want to end the game?");
-        if (shouldGameEnd) {
-            isInGameMode = false;
-            startButton.value = "Start";
-            startButton.nextElementSibling.remove();
-            window.location.reload();
-        }
+        if (shouldGameEnd)
+            return window.location.reload();
     }
     else {
         isInGameMode = true;
