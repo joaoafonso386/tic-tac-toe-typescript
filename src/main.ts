@@ -1,5 +1,4 @@
 const board: HTMLTableElement = document.querySelector(".board");
-console.log(board)
 const startButton: HTMLInputElement = document.querySelector(".start-game");
 const playerOne: string = "X";
 const playerTwo: string = "O";
@@ -19,11 +18,15 @@ for(let row of board.rows) {
     typedCell.addEventListener("click",() => { 
       if(isInGameMode) {
         if(playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) {
-          playerOnePlays++;
-          typedCell.innerText = playerOne;
+          if(typedCell.innerHTML.length <= 0) {
+            playerOnePlays++;
+            typedCell.innerText = playerOne;
+          } 
         } else {
-          playerTwoPlays++;
-          typedCell.innerText = playerTwo;
+          if(typedCell.innerHTML.length <= 0) {
+            playerTwoPlays++;
+            typedCell.innerText = playerTwo;
+          }
         }
       }
     })

@@ -1,6 +1,5 @@
 "use strict";
 const board = document.querySelector(".board");
-console.log(board);
 const startButton = document.querySelector(".start-game");
 const playerOne = "X";
 const playerTwo = "O";
@@ -16,12 +15,16 @@ for (let row of board.rows) {
         typedCell.addEventListener("click", () => {
             if (isInGameMode) {
                 if (playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) {
-                    playerOnePlays++;
-                    typedCell.innerText = playerOne;
+                    if (typedCell.innerHTML.length <= 0) {
+                        playerOnePlays++;
+                        typedCell.innerText = playerOne;
+                    }
                 }
                 else {
-                    playerTwoPlays++;
-                    typedCell.innerText = playerTwo;
+                    if (typedCell.innerHTML.length <= 0) {
+                        playerTwoPlays++;
+                        typedCell.innerText = playerTwo;
+                    }
                 }
             }
         });
