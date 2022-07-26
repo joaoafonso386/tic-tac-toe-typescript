@@ -3,10 +3,10 @@ console.log(board)
 const startButton: HTMLInputElement = document.querySelector(".start-game");
 const playerOne: string = "X";
 const playerTwo: string = "O";
-let isPlayerOnePlaying: boolean = false;
-let isPlayerTwoPlaying: boolean = false;
+let playerOnePlays: number = 0;
+let playerTwoPlays: number = 0;
 let isInGameMode: boolean = false;
-const 
+ 
 
 //children should have a variable of its own 
 for(let row of board.rows) {
@@ -18,11 +18,11 @@ for(let row of board.rows) {
     
     typedCell.addEventListener("click",() => { 
       if(isInGameMode) {
-          if(!isPlayerOnePlaying) {
-          isPlayerOnePlaying = true;
+        if(playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) {
+          playerOnePlays++;
           typedCell.innerText = playerOne;
         } else {
-          isPlayerTwoPlaying = true;
+          playerTwoPlays++;
           typedCell.innerText = playerTwo;
         }
       }
