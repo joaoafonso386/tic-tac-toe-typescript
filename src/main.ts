@@ -7,7 +7,9 @@ let playerTwoPlays: number = 0;
 let isInGameMode: boolean = false;
  
 
-//children should have a variable of its own 
+//create a function that checks the board at every play to see winning conditions 
+
+
 for(let row of board.rows) {
   for (let cell of row.children) {
 
@@ -18,12 +20,12 @@ for(let row of board.rows) {
     typedCell.addEventListener("click",() => { 
       if(isInGameMode) {
         if(playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) {
-          if(typedCell.innerHTML.length <= 0) {
+          if(typedCell.innerText.length <= 0) {
             playerOnePlays++;
             typedCell.innerText = playerOne;
           } 
         } else {
-          if(typedCell.innerHTML.length <= 0) {
+          if(typedCell.innerText.length <= 0) {
             playerTwoPlays++;
             typedCell.innerText = playerTwo;
           }
