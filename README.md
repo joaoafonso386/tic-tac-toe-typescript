@@ -1,5 +1,12 @@
 # Tic Tac Toe Game
 
+*** Project written in vanilla typescript ***
+
+*** Goals *** 
+> Practice programming logic by creating my own custom tic tac toe solution  
+> Work with types as much as possible
+> Abstract the code as much as possible to create a clean solution
+
 ### RULES ###
 
 1. The game is played on a grid that's 3 squares by 3 squares.
