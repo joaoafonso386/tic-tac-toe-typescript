@@ -21,22 +21,19 @@ for (let row of board.rows) {
         const typedCell = cell;
         typedCell.style.color = "red";
         typedCell.style.textAlign = "center";
-        // console.log(typedCell)
         typedCell.addEventListener("click", () => {
-            if (isInGameMode) {
-                if (playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) {
-                    if (typedCell.innerText.length <= 0) {
-                        playerOnePlays++;
-                        typedCell.innerText = playerOne;
-                        determineWinner(typedCell);
-                    }
-                }
-                else {
-                    if (typedCell.innerText.length <= 0) {
-                        playerTwoPlays++;
-                        typedCell.innerText = playerTwo;
-                        determineWinner(typedCell);
-                    }
+            if (isInGameMode &&
+                playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays &&
+                typedCell.innerText.length <= 0) {
+                playerOnePlays++;
+                typedCell.innerText = playerOne;
+                determineWinner(typedCell);
+            }
+            else {
+                if (typedCell.innerText.length <= 0) {
+                    playerTwoPlays++;
+                    typedCell.innerText = playerTwo;
+                    determineWinner(typedCell);
                 }
             }
         });
