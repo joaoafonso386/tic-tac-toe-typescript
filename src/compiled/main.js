@@ -12,17 +12,21 @@ let isInGameMode = false;
 // Check for a diagonal winner -> Check if position[0][1][2] are filled with the same content or positions[2][1][0] of each parent element
 // Check for a tie -> all cells are filled but no horizontal, diagonal or vertical conditions are met
 // Stop the game if a winner has been found
+//Add return types to functions
 const determineWinner = () => {
     for (let row of board.rows) {
-        determineHorizontalWinner(row);
+        const rowArray = [...row.children];
+        determineHorizontalWinner(rowArray);
+        determineVerticalWinner(rowArray);
     }
 };
-const determineHorizontalWinner = (row) => {
-    const rowArray = [...row.children];
+const determineHorizontalWinner = (rowArray) => {
     if (rowArray.every(el => el.innerText === playerOne))
         return console.log(`Player ${playerOne} has won!`);
     if (rowArray.every(el => el.innerText === playerTwo))
         return console.log(`Player ${playerTwo} has won!`);
+};
+const determineVerticalWinner = (rowArray) => {
 };
 for (let row of board.rows) {
     for (let cell of row.children) {
