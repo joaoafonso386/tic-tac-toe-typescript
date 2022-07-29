@@ -12,9 +12,10 @@ let isInGameMode = false;
 // Check for a diagonal winner -> Check if position[0][1][2] are filled with the same content or positions[2][1][0] of each parent element
 // Check for a tie -> all cells are filled but no horizontal, diagonal or vertical conditions are met
 const determineWinner = (cell) => {
-    const cellArr = [];
-    cellArr.push(cell);
-    console.log(cellArr);
+    determineHorizontalWinner(cell);
+};
+const determineHorizontalWinner = (cell) => {
+    console.log(cell);
 };
 for (let row of board.rows) {
     for (let cell of row.children) {
@@ -22,8 +23,9 @@ for (let row of board.rows) {
         typedCell.style.color = "red";
         typedCell.style.textAlign = "center";
         typedCell.addEventListener("click", () => {
-            if (isInGameMode &&
-                playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays &&
+            if (!isInGameMode)
+                return;
+            if ((playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) &&
                 typedCell.innerText.length <= 0) {
                 playerOnePlays++;
                 typedCell.innerText = playerOne;

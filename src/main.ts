@@ -15,12 +15,14 @@ let isInGameMode: boolean = false;
 
 const determineWinner = (cell: HTMLTableCellElement) => {
 
-  const cellArr: HTMLTableCellElement[] = [];
-
-  cellArr.push(cell)
-
-  console.log (cellArr)
+  determineHorizontalWinner(cell);
  
+}
+
+const determineHorizontalWinner = (cell: HTMLTableCellElement) => {
+
+  console.log(cell)
+
 }
 
 for(let row of board.rows) {
@@ -30,9 +32,11 @@ for(let row of board.rows) {
     typedCell.style.color = "red";
     typedCell.style.textAlign = "center";
     
+    
     typedCell.addEventListener("click",() => { 
-      if(isInGameMode && 
-        playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays && 
+        if(!isInGameMode) return
+        
+        if((playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) && 
         typedCell.innerText.length <= 0) {
           playerOnePlays++;
           typedCell.innerText = playerOne;
