@@ -6,13 +6,6 @@ const playerTwo = "O";
 let playerOnePlays = 0;
 let playerTwoPlays = 0;
 let isInGameMode = false;
-// Create a function that checks the board at every play to see winning conditions. Create functions for each winning condition (horizontal, vertical, diagonal, tie)
-// Check for a horizontal winner -> Check parent element cells and see if every cell has "X" or "O"
-// Check for a vertical winner -> Check if position[1] is filled for that parent element and the other parent elements
-// Check for a diagonal winner -> Check if position[0][1][2] are filled with the same content or positions[2][1][0] of each parent element
-// Check for a tie -> all cells are filled but no horizontal, diagonal or vertical conditions are met
-// Stop the game if a winner has been found
-//Add return types to functions
 const determineWinner = () => {
     for (let row of board.rows) {
         const rowArray = [...row.children];
