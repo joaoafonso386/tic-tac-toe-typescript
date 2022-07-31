@@ -46,6 +46,7 @@ for (let row of board.rows) {
 }
 startButton.onclick = () => {
     const gameStartedParagraph = document.createElement("p");
+    const infoParagraph = document.createElement("p");
     if (isInGameMode) {
         const shouldGameEnd = confirm("Do you want to end the game?");
         if (shouldGameEnd)
@@ -55,6 +56,8 @@ startButton.onclick = () => {
         isInGameMode = true;
         startButton.value = "Stop";
         gameStartedParagraph.textContent = "You are currently playing!";
-        startButton.parentNode.append(gameStartedParagraph);
+        infoParagraph.style.marginTop = "0px";
+        infoParagraph.textContent = "Press stop to end the game and restart";
+        startButton.parentNode.append(gameStartedParagraph, infoParagraph);
     }
 };
