@@ -1,0 +1,13 @@
+{
+  "name": "tic-tac-toe-typescript",
+  "version": "1.0.0",
+  "description": "*** Project written in vanilla typescript ***",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
