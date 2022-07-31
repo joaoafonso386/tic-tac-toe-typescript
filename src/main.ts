@@ -15,9 +15,11 @@ const determineWinner = () => {
     const rowArray = [...row.children] as HTMLTableCellElement[];
 
     determineHorizontalWinner(rowArray)
-    determineVerticalWinner(rowArray)
   }
 
+  console.log(board)
+  // determineVerticalWinner(rowArray)
+  
  
 }
 
@@ -26,9 +28,17 @@ const determineHorizontalWinner = (rowArray: HTMLTableCellElement[]): void => {
   if(rowArray.every(el => el.innerText === playerOne)) return console.log(`Player ${playerOne} has won!`)
   if(rowArray.every(el => el.innerText === playerTwo)) return console.log(`Player ${playerTwo} has won!`)
 
+
+
 }
 
 const determineVerticalWinner = (rowArray: HTMLTableCellElement[]) => {
+
+  const isVerticalWinner: boolean = rowArray.every(el => {
+    console.log(el)
+
+  })
+
 
 }
 

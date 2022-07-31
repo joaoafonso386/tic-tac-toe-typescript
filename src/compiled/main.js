@@ -10,8 +10,9 @@ const determineWinner = () => {
     for (let row of board.rows) {
         const rowArray = [...row.children];
         determineHorizontalWinner(rowArray);
-        determineVerticalWinner(rowArray);
     }
+    console.log(board);
+    // determineVerticalWinner(rowArray)
 };
 const determineHorizontalWinner = (rowArray) => {
     if (rowArray.every(el => el.innerText === playerOne))
@@ -20,6 +21,9 @@ const determineHorizontalWinner = (rowArray) => {
         return console.log(`Player ${playerTwo} has won!`);
 };
 const determineVerticalWinner = (rowArray) => {
+    const isVerticalWinner = rowArray.every(el => {
+        console.log(el);
+    });
 };
 for (let row of board.rows) {
     for (let cell of row.children) {
