@@ -1,5 +1,7 @@
 const board: HTMLTableElement = document.querySelector(".board");
 const startButton: HTMLInputElement = document.querySelector(".start-game");
+const gameStartedParagraph: HTMLParagraphElement = document.createElement("p");
+const infoParagraph: HTMLParagraphElement = document.createElement("p");
 const playerOne: string = "X";
 const playerTwo: string = "O";
 let playerOnePlays: number = 0;
@@ -15,8 +17,8 @@ const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTable
 
   return winningConditionArray.some(conditionArray => {
   
-    const playerOneWins = determineWinningPlayer(cellArray, conditionArray, playerOne);
-    const playerTwoWins = determineWinningPlayer(cellArray, conditionArray, playerTwo);
+    const playerOneWins: boolean | void = determineWinningPlayer(cellArray, conditionArray, playerOne);
+    const playerTwoWins: boolean | void = determineWinningPlayer(cellArray, conditionArray, playerTwo);
   
     if(playerOneWins || playerTwoWins) {
       winnerIsFound = true
@@ -24,9 +26,21 @@ const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTable
 
   })
 
+
 }
 
-const determineWinningPlayer = (cellArray: HTMLTableCellElement[], arrayOfConditions: number[], player: string): boolean => {
+const determineTie = (cellArray: HTMLTableCellElement[]) => {
+
+  const tie: boolean = cellArray.every(cell => cell.innerHTML.length > 0 && !winnerIsFound)
+  
+  if(tie) {
+    winnerIsFound = true;
+    console.log("its a tie")
+  }
+
+}
+
+const determineWinningPlayer = (cellArray: HTMLTableCellElement[], arrayOfConditions: number[], player: string): boolean | void => {
 
   const matchPLayer: boolean = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
 
@@ -59,23 +73,19 @@ for(let row of board.rows) {
             typedCell.innerText = playerTwo;
           }
         }
-        
+
         determineWinner(horizontalWinner, cellArray)
         determineWinner(verticalWinner, cellArray)
         determineWinner(diagonalWinner, cellArray)
-
+        determineTie(cellArray)
       })
-    
   }
 }
 
 
 startButton.onclick = () => {
-  
-  const gameStartedParagraph: HTMLParagraphElement = document.createElement("p");
-  const infoParagraph: HTMLParagraphElement = document.createElement("p");
 
-  if(isInGameMode && winnerIsFound) {
+  if(isInGameMode || winnerIsFound) {
     const shouldGameEnd: boolean = confirm("Do you want to end the game?");
     if(shouldGameEnd) window.location.reload();
   } else {

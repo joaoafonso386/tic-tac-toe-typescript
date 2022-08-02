@@ -1,6 +1,8 @@
 "use strict";
 const board = document.querySelector(".board");
 const startButton = document.querySelector(".start-game");
+const gameStartedParagraph = document.createElement("p");
+const infoParagraph = document.createElement("p");
 const playerOne = "X";
 const playerTwo = "O";
 let playerOnePlays = 0;
@@ -19,6 +21,13 @@ const determineWinner = (winningConditionArray, cellArray) => {
             winnerIsFound = true;
         }
     });
+};
+const determineTie = (cellArray) => {
+    const tie = cellArray.every(cell => cell.innerHTML.length > 0 && !winnerIsFound);
+    if (tie) {
+        winnerIsFound = true;
+        console.log("its a tie");
+    }
 };
 const determineWinningPlayer = (cellArray, arrayOfConditions, player) => {
     const matchPLayer = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
@@ -50,13 +59,12 @@ for (let row of board.rows) {
             determineWinner(horizontalWinner, cellArray);
             determineWinner(verticalWinner, cellArray);
             determineWinner(diagonalWinner, cellArray);
+            determineTie(cellArray);
         });
     }
 }
 startButton.onclick = () => {
-    const gameStartedParagraph = document.createElement("p");
-    const infoParagraph = document.createElement("p");
-    if (isInGameMode && winnerIsFound) {
+    if (isInGameMode || winnerIsFound) {
         const shouldGameEnd = confirm("Do you want to end the game?");
         if (shouldGameEnd)
             window.location.reload();
