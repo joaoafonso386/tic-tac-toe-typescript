@@ -6,6 +6,7 @@ const playerTwo = "O";
 let playerOnePlays = 0;
 let playerTwoPlays = 0;
 let isInGameMode = false;
+let winnerIsFound = false;
 let cellArr = [];
 let customIndex = 0;
 const horizontalWinner = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
@@ -17,8 +18,10 @@ const determineWinner = (cellArr) => {
 };
 const determineHorizontalWinner = (cellArr) => {
     horizontalWinner.some(conditon => {
-        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne))
-            return console.log("Player X has won");
+        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne)) {
+            winnerIsFound = true;
+            console.log("Player X has won");
+        }
     });
     verticalWinner.some(conditon => {
         if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne))
@@ -58,7 +61,7 @@ for (let row of board.rows) {
 startButton.onclick = () => {
     const gameStartedParagraph = document.createElement("p");
     const infoParagraph = document.createElement("p");
-    if (isInGameMode) {
+    if (isInGameMode && winnerIsFound) {
         const shouldGameEnd = confirm("Do you want to end the game?");
         if (shouldGameEnd)
             return window.location.reload();
