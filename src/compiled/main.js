@@ -41,7 +41,7 @@ for (let row of board.rows) {
         typedCell.style.textAlign = "center";
         cellArr.push(typedCell);
         typedCell.addEventListener("click", () => {
-            if (!isInGameMode)
+            if (!isInGameMode || winnerIsFound)
                 return;
             if ((playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) &&
                 typedCell.innerText.length <= 0) {
@@ -64,7 +64,7 @@ startButton.onclick = () => {
     if (isInGameMode && winnerIsFound) {
         const shouldGameEnd = confirm("Do you want to end the game?");
         if (shouldGameEnd)
-            return window.location.reload();
+            window.location.reload();
     }
     else {
         isInGameMode = true;
