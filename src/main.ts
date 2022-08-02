@@ -11,27 +11,31 @@ const horizontalWinner: number[][] = [[0,1,2],[3,4,5],[6,7,8]];
 const verticalWinner: number[][] = [[0,3,6],[1,4,7],[2,5,8]];
 const diagonalWinner: number[][] = [[0,4,8],[2,4,6]];
 
-const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTableCellElement[]) => {
+const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTableCellElement[]): boolean => {
 
-  const winner:boolean = winningConditionArray.some(conditon => {
+  return winningConditionArray.some(conditionArray => {
+  
+    const playerOneWins = determineWinningPlayer(cellArray, conditionArray, playerOne);
+    const playerTwoWins = determineWinningPlayer(cellArray, conditionArray, playerTwo);
+  
+    if(playerOneWins || playerTwoWins) {
+      winnerIsFound = true
+    }
 
-    const matchPLayerOne = conditon.every(number => cellArray[number].innerHTML === playerOne)
-    const matchPLayerTwo = conditon.every(number => cellArray[number].innerHTML === playerTwo)
-
-    if(matchPLayerOne) {
-     winnerIsFound = true;
-     console.log("Player X has won")
-    } 
-    
-    if(matchPLayerTwo) {
-     winnerIsFound = true;
-     console.log("Player O has won")
-    } 
- 
   })
 
-
 }
+
+const determineWinningPlayer = (cellArray: HTMLTableCellElement[], arrayOfConditions: number[], player: string): boolean => {
+
+  const matchPLayer: boolean = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
+
+  if(matchPLayer) {
+    console.log(`Player ${player} has won`)
+    return true
+  }
+
+} 
 
 for(let row of board.rows) {
   for (let cell of row.children) {
@@ -55,9 +59,11 @@ for(let row of board.rows) {
             typedCell.innerText = playerTwo;
           }
         }
+        
         determineWinner(horizontalWinner, cellArray)
         determineWinner(verticalWinner, cellArray)
         determineWinner(diagonalWinner, cellArray)
+
       })
     
   }
