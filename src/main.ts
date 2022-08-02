@@ -6,46 +6,28 @@ let playerOnePlays: number = 0;
 let playerTwoPlays: number = 0;
 let isInGameMode: boolean = false;
 let winnerIsFound: boolean = false;
-let cellArr: HTMLTableCellElement[] = [];
-let customIndex: number = 0;
+let cellArray: HTMLTableCellElement[] = [];
 const horizontalWinner: number[][] = [[0,1,2],[3,4,5],[6,7,8]];
 const verticalWinner: number[][] = [[0,3,6],[1,4,7],[2,5,8]];
-const diagonalWinner: number[][] = [[0,3,6],[1,4,7],[2,5,8]];
+const diagonalWinner: number[][] = [[0,4,8],[2,4,6]];
 
-const determineWinner = (cellArr: HTMLTableCellElement[]) => {
+const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTableCellElement[]) => {
 
-  determineHorizontalWinner(cellArr)
+  const winner:boolean = winningConditionArray.some(conditon => {
 
-  // determineVerticalWinner(rowArray)
+    const matchPLayerOne = conditon.every(number => cellArray[number].innerHTML === playerOne)
+    const matchPLayerTwo = conditon.every(number => cellArray[number].innerHTML === playerTwo)
+
+    if(matchPLayerOne) {
+     winnerIsFound = true;
+     console.log("Player X has won")
+    } 
+    
+    if(matchPLayerTwo) {
+     winnerIsFound = true;
+     console.log("Player O has won")
+    } 
  
-}
-
-
-const determineHorizontalWinner = (cellArr: HTMLTableCellElement[]): void => {
-
-  horizontalWinner.some(conditon => {
-
-   if(conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne)) {
-    winnerIsFound = true;
-    console.log("Player X has won")
-   } 
-   
-
-  })
-
-  verticalWinner.some(conditon => {
-
-    if(conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne)) return console.log("Player X has won")
-    if(conditon.every((celNum) => cellArr[celNum].innerHTML === playerTwo)) return console.log("Player O has won")
- 
-   })
-  
-}
-
-const determineVerticalWinner = (rowArray: HTMLTableCellElement[]) => {
-  
-  const isVerticalWinner: void = rowArray.forEach((el) => {
-
   })
 
 
@@ -57,7 +39,7 @@ for(let row of board.rows) {
     const typedCell = cell as HTMLTableCellElement;
     typedCell.style.color = "red";
     typedCell.style.textAlign = "center";
-    cellArr.push(typedCell)
+    cellArray.push(typedCell)
     
     
     typedCell.addEventListener("click",() => { 
@@ -73,7 +55,9 @@ for(let row of board.rows) {
             typedCell.innerText = playerTwo;
           }
         }
-        determineWinner(cellArr)
+        determineWinner(horizontalWinner, cellArray)
+        determineWinner(verticalWinner, cellArray)
+        determineWinner(diagonalWinner, cellArray)
       })
     
   }

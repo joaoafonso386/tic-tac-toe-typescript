@@ -7,31 +7,22 @@ let playerOnePlays = 0;
 let playerTwoPlays = 0;
 let isInGameMode = false;
 let winnerIsFound = false;
-let cellArr = [];
-let customIndex = 0;
+let cellArray = [];
 const horizontalWinner = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
 const verticalWinner = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
-const diagonalWinner = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
-const determineWinner = (cellArr) => {
-    determineHorizontalWinner(cellArr);
-    // determineVerticalWinner(rowArray)
-};
-const determineHorizontalWinner = (cellArr) => {
-    horizontalWinner.some(conditon => {
-        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne)) {
+const diagonalWinner = [[0, 4, 8], [2, 4, 6]];
+const determineWinner = (winningConditionArray, cellArray) => {
+    const winner = winningConditionArray.some(conditon => {
+        const matchPLayerOne = conditon.every(number => cellArray[number].innerHTML === playerOne);
+        const matchPLayerTwo = conditon.every(number => cellArray[number].innerHTML === playerTwo);
+        if (matchPLayerOne) {
             winnerIsFound = true;
             console.log("Player X has won");
         }
-    });
-    verticalWinner.some(conditon => {
-        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne))
-            return console.log("Player X has won");
-        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerTwo))
-            return console.log("Player O has won");
-    });
-};
-const determineVerticalWinner = (rowArray) => {
-    const isVerticalWinner = rowArray.forEach((el) => {
+        if (matchPLayerTwo) {
+            winnerIsFound = true;
+            console.log("Player O has won");
+        }
     });
 };
 for (let row of board.rows) {
@@ -39,7 +30,7 @@ for (let row of board.rows) {
         const typedCell = cell;
         typedCell.style.color = "red";
         typedCell.style.textAlign = "center";
-        cellArr.push(typedCell);
+        cellArray.push(typedCell);
         typedCell.addEventListener("click", () => {
             if (!isInGameMode || winnerIsFound)
                 return;
@@ -54,7 +45,9 @@ for (let row of board.rows) {
                     typedCell.innerText = playerTwo;
                 }
             }
-            determineWinner(cellArr);
+            determineWinner(horizontalWinner, cellArray);
+            determineWinner(verticalWinner, cellArray);
+            determineWinner(diagonalWinner, cellArray);
         });
     }
 }
