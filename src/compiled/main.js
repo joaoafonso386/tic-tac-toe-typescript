@@ -10,26 +10,22 @@ let cellArr = [];
 let customIndex = 0;
 const horizontalWinner = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
 const verticalWinner = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
+const diagonalWinner = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
 const determineWinner = (cellArr) => {
-    console.log(cellArr);
     determineHorizontalWinner(cellArr);
     // determineVerticalWinner(rowArray)
 };
 const determineHorizontalWinner = (cellArr) => {
     horizontalWinner.some(conditon => {
-        if (conditon.every((celNum) => cellArr[celNum].typedCell.innerHTML === playerOne))
+        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne))
             return console.log("Player X has won");
     });
     verticalWinner.some(conditon => {
-        if (conditon.every((celNum) => cellArr[celNum].typedCell.innerHTML === playerOne))
+        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerOne))
             return console.log("Player X has won");
+        if (conditon.every((celNum) => cellArr[celNum].innerHTML === playerTwo))
+            return console.log("Player O has won");
     });
-    // if(cellArr.every(el => el.typedCell.innerText === playerOne)) {
-    //   return console.log(`Player ${playerOne} has won!`)
-    // }
-    // if(cellArr.every(el => el.typedCell.innerText === playerTwo)) {
-    //   return console.log(`Player ${playerTwo} has won!`)
-    // } 
 };
 const determineVerticalWinner = (rowArray) => {
     const isVerticalWinner = rowArray.forEach((el) => {
@@ -40,7 +36,7 @@ for (let row of board.rows) {
         const typedCell = cell;
         typedCell.style.color = "red";
         typedCell.style.textAlign = "center";
-        cellArr.push({ typedCell, index: customIndex++ });
+        cellArr.push(typedCell);
         typedCell.addEventListener("click", () => {
             if (!isInGameMode)
                 return;
