@@ -1,9 +1,20 @@
+h1 {
+  justify-self: start;
+}
+
+h3 {
+  margin: 0;
+  justify-self: start;
+}
+
 td {
   border: 1px solid black;
 }
 
 ul {
-  margin-top: 0px;
+  margin-top: 10px;
+  padding: 0px;
+  justify-self: start;
 }
 
 li {
@@ -14,10 +25,12 @@ li {
 .main {
   display: grid;
   place-items: center;
+  width: 300px;
+  margin: auto;
 }
 
 .main .board {
-  margin-top: 50px;
+  margin-top: 10px;
   width: 300px;
   height: 300px;
   border-spacing: 0px;
@@ -25,7 +38,7 @@ li {
 }
 
 .start-game {
-  margin-top: 50px;
+  margin-top: 30px;
   border: 0px;
   background-color: white;
   border: 1px solid red;

@@ -2,6 +2,7 @@ const board: HTMLTableElement = document.querySelector(".board");
 const startButton: HTMLInputElement = document.querySelector(".start-game");
 const gameStartedParagraph: HTMLParagraphElement = document.createElement("p");
 const infoParagraph: HTMLParagraphElement = document.createElement("p");
+const whoIsPlayingParagraph: HTMLParagraphElement = document.createElement("p");
 const playerOne: string = "X";
 const playerTwo: string = "O";
 let playerOnePlays: number = 0;
@@ -91,9 +92,10 @@ startButton.onclick = () => {
   } else {
     isInGameMode = true;
     startButton.value = "Stop";
-    gameStartedParagraph.textContent = "You are currently playing!";
+    whoIsPlayingParagraph.innerText
+    gameStartedParagraph.innerText = "You are currently playing!";
     infoParagraph.style.marginTop = "0px";
-    infoParagraph.textContent = "Press stop to end the game and restart";
+    infoParagraph.innerText = "Press stop to end the game and restart";
     startButton.parentNode.append(gameStartedParagraph, infoParagraph);
   }
   
