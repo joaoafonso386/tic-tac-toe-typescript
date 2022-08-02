@@ -3,7 +3,7 @@ const board = document.querySelector(".board");
 const startButton = document.querySelector(".start-game");
 const gameStartedParagraph = document.createElement("p");
 const infoParagraph = document.createElement("p");
-const whoIsPlayingParagraph = document.createElement("p");
+const whoIsPlayingParagraph = document.createElement("li");
 const playerOne = "X";
 const playerTwo = "O";
 let playerOnePlays = 0;
@@ -33,7 +33,9 @@ const determineTie = (cellArray) => {
 const determineWinningPlayer = (cellArray, arrayOfConditions, player) => {
     const matchPLayer = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
     if (matchPLayer) {
-        console.log(`Player ${player} has won`);
+        whoIsPlayingParagraph.style.color = "red";
+        whoIsPlayingParagraph.innerText = `Player ${player} has won! The game is now over`;
+        gameStartedParagraph.remove();
         return true;
     }
 };
@@ -48,12 +50,14 @@ for (let row of board.rows) {
                 return;
             if ((playerOnePlays < playerTwoPlays || playerOnePlays === playerTwoPlays) &&
                 typedCell.innerText.length <= 0) {
+                whoIsPlayingParagraph.innerText = `Player ${playerTwo} is playing!`;
                 playerOnePlays++;
                 typedCell.innerText = playerOne;
             }
             else {
                 if (typedCell.innerText.length <= 0) {
                     playerTwoPlays++;
+                    whoIsPlayingParagraph.innerText = `Player ${playerOne} is playing!`;
                     typedCell.innerText = playerTwo;
                 }
             }
@@ -71,12 +75,17 @@ startButton.onclick = () => {
             window.location.reload();
     }
     else {
+        const rulesList = board.previousElementSibling;
         isInGameMode = true;
         startButton.value = "Stop";
-        whoIsPlayingParagraph.innerText;
+        whoIsPlayingParagraph.innerText = `Player ${playerOne} is playing!`;
+        whoIsPlayingParagraph.style.fontWeight = "bold";
+        whoIsPlayingParagraph.style.marginTop = "10px";
         gameStartedParagraph.innerText = "You are currently playing!";
-        infoParagraph.style.marginTop = "0px";
+        gameStartedParagraph.style.marginBottom = "0px";
         infoParagraph.innerText = "Press stop to end the game and restart";
+        infoParagraph.style.marginTop = "10px";
         startButton.parentNode.append(gameStartedParagraph, infoParagraph);
+        rulesList.appendChild(whoIsPlayingParagraph);
     }
 };
