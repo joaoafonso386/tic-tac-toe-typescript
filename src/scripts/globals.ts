@@ -1,28 +1,26 @@
 interface Globals {
 
-DOM: {
-  board: HTMLTableElement,
-  startButton: HTMLInputElement,
-  gameStartedParagraph: HTMLParagraphElement,
-  infoParagraph: HTMLParagraphElement,
-  whoIsPlayingParagraph: HTMLLIElement,
-  cellArray: HTMLTableCellElement[]
-},
-players: {
-  playerOne: string,
-  playerTwo: string
-}
-plays: {
-  playerOnePlays: number,
-  playerTwoPlays: number
-}
-winningConditions: {
-  // horizontalWinner: 
-}
-controlVariables: {
-  isInGameMode: boolean,
-  winnerIsFound: boolean
-}
+  DOM: {
+    board: HTMLTableElement,
+    startButton: HTMLInputElement,
+    gameStartedParagraph: HTMLParagraphElement,
+    infoParagraph: HTMLParagraphElement,
+    whoIsPlayingParagraph: HTMLLIElement,
+    cellArray: HTMLTableCellElement[]
+  },
+  players: {
+    playerOne: string,
+    playerTwo: string
+  }
+  plays: {
+    playerOnePlays: number,
+    playerTwoPlays: number
+  }
+  winningConditions: number[][]
+  controlVariables: {
+    isInGameMode: boolean,
+    winnerIsFound: boolean
+  }
 
 }
 
@@ -45,9 +43,16 @@ const globals: Globals = {
     playerOnePlays: 0,
     playerTwoPlays: 0
   },
-  winningConditions: {
-
-  },
+  winningConditions: [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ],
   controlVariables: {
     isInGameMode: false,
     winnerIsFound: false
