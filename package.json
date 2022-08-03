@@ -1,7 +1,7 @@
 {
   "name": "tic-tac-toe-typescript",
   "version": "1.0.0",
-  "description": "*** Project written in vanilla typescript ***",
+  "description": "*** Tic Tac Toe in vanilla typescript ***",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

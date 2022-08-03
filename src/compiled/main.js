@@ -1,16 +1,17 @@
-"use strict";
-const board = document.querySelector(".board");
+import { globals } from "./globals.js";
+const { board } = globals.DOM;
+// const board: HTMLTableElement = document.querySelector(".board");
 const startButton = document.querySelector(".start-game");
 const gameStartedParagraph = document.createElement("p");
 const infoParagraph = document.createElement("p");
 const whoIsPlayingParagraph = document.createElement("li");
+let cellArray = [];
 const playerOne = "X";
 const playerTwo = "O";
 let playerOnePlays = 0;
 let playerTwoPlays = 0;
 let isInGameMode = false;
 let winnerIsFound = false;
-let cellArray = [];
 const horizontalWinner = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
 const verticalWinner = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
 const diagonalWinner = [[0, 4, 8], [2, 4, 6]];
@@ -27,7 +28,9 @@ const determineTie = (cellArray) => {
     const tie = cellArray.every(cell => cell.innerHTML.length > 0 && !winnerIsFound);
     if (tie) {
         winnerIsFound = true;
-        console.log("its a tie");
+        whoIsPlayingParagraph.style.color = "red";
+        whoIsPlayingParagraph.innerText = `It's a tie!`;
+        gameStartedParagraph.remove();
     }
 };
 const determineWinningPlayer = (cellArray, arrayOfConditions, player) => {

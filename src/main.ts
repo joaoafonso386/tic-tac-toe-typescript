@@ -1,18 +1,23 @@
-const board: HTMLTableElement = document.querySelector(".board");
+import { globals } from "./globals.js";
+
+const { board } = globals.DOM;
+
+// const board: HTMLTableElement = document.querySelector(".board");
 const startButton: HTMLInputElement = document.querySelector(".start-game");
 const gameStartedParagraph: HTMLParagraphElement = document.createElement("p");
 const infoParagraph: HTMLParagraphElement = document.createElement("p");
 const whoIsPlayingParagraph: HTMLLIElement = document.createElement("li");
+let cellArray: HTMLTableCellElement[] = [];
 const playerOne: string = "X";
 const playerTwo: string = "O";
 let playerOnePlays: number = 0;
 let playerTwoPlays: number = 0;
 let isInGameMode: boolean = false;
 let winnerIsFound: boolean = false;
-let cellArray: HTMLTableCellElement[] = [];
 const horizontalWinner: number[][] = [[0,1,2],[3,4,5],[6,7,8]];
 const verticalWinner: number[][] = [[0,3,6],[1,4,7],[2,5,8]];
 const diagonalWinner: number[][] = [[0,4,8],[2,4,6]];
+
 
 const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTableCellElement[]): boolean => {
 
@@ -27,7 +32,6 @@ const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTable
 
   })
 
-
 }
 
 const determineTie = (cellArray: HTMLTableCellElement[]) => {
@@ -36,7 +40,9 @@ const determineTie = (cellArray: HTMLTableCellElement[]) => {
   
   if(tie) {
     winnerIsFound = true;
-    console.log("its a tie")
+    whoIsPlayingParagraph.style.color = "red";
+    whoIsPlayingParagraph.innerText =`It's a tie!`;
+    gameStartedParagraph.remove()
   }
 
 }
