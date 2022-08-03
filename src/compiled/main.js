@@ -6,30 +6,25 @@ let { playerOnePlays, playerTwoPlays } = globals.plays;
 let { isInGameMode, winnerIsFound } = globals.controlVariables;
 const determineWinner = (winningConditionArray, cellArray) => {
     return winningConditionArray.some(conditionArray => {
-        const playerOneWins = determineWinningPlayer(cellArray, conditionArray, playerOne);
-        const playerTwoWins = determineWinningPlayer(cellArray, conditionArray, playerTwo);
-        if (playerOneWins || playerTwoWins) {
+        const playerOneWins = determineWinningPlayerOrTie(cellArray, conditionArray, playerOne);
+        const playerTwoWins = determineWinningPlayerOrTie(cellArray, conditionArray, playerTwo);
+        const tie = determineWinningPlayerOrTie(cellArray, conditionArray);
+        if (playerOneWins || playerTwoWins || tie) {
             winnerIsFound = true;
+            whoIsPlayingParagraph.style.color = "red";
+            gameStartedParagraph.remove();
+            whoIsPlayingParagraph.innerText = playerOneWins || playerTwoWins || tie;
         }
     });
 };
-const determineTie = (cellArray) => {
+const determineWinningPlayerOrTie = (cellArray, arrayOfConditions, player) => {
+    const findWinningPLayer = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
     const tie = cellArray.every(cell => cell.innerHTML.length > 0 && !winnerIsFound);
-    if (tie) {
-        winnerIsFound = true;
-        whoIsPlayingParagraph.style.color = "red";
-        whoIsPlayingParagraph.innerText = `It's a tie!`;
-        gameStartedParagraph.remove();
-    }
-};
-const determineWinningPlayer = (cellArray, arrayOfConditions, player) => {
-    const matchPLayer = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
-    if (matchPLayer) {
-        whoIsPlayingParagraph.style.color = "red";
-        whoIsPlayingParagraph.innerText = `Player ${player} has won! The game is now over`;
-        gameStartedParagraph.remove();
-        return true;
-    }
+    if (findWinningPLayer)
+        return `Player ${player} has won! The game is now over`;
+    if (tie)
+        return `It's a tie!`;
+    return "";
 };
 for (let row of board.rows) {
     for (let cell of row.children) {
@@ -54,7 +49,6 @@ for (let row of board.rows) {
                 }
             }
             determineWinner(winningConditionArray, cellArray);
-            determineTie(cellArray);
         });
     }
 }

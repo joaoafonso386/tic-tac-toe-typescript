@@ -21,40 +21,31 @@ const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTable
 
   return winningConditionArray.some(conditionArray => {
   
-    const playerOneWins: boolean | void = determineWinningPlayer(cellArray, conditionArray, playerOne);
-    const playerTwoWins: boolean | void = determineWinningPlayer(cellArray, conditionArray, playerTwo);
+    const playerOneWins: string  = determineWinningPlayerOrTie(cellArray, conditionArray, playerOne);
+    const playerTwoWins: string  = determineWinningPlayerOrTie(cellArray, conditionArray, playerTwo);
+    const tie: string = determineWinningPlayerOrTie(cellArray, conditionArray);
   
-    if(playerOneWins || playerTwoWins) {
-      winnerIsFound = true
+    if(playerOneWins || playerTwoWins || tie) {
+      winnerIsFound = true;
+      whoIsPlayingParagraph.style.color = "red";
+      gameStartedParagraph.remove()
+      whoIsPlayingParagraph.innerText = playerOneWins || playerTwoWins || tie
     }
 
   })
 
 }
 
-const determineTie = (cellArray: HTMLTableCellElement[]) => {
+const determineWinningPlayerOrTie = (cellArray: HTMLTableCellElement[], arrayOfConditions: number[], player?: string): string => {
 
+  const findWinningPLayer: boolean = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
   const tie: boolean = cellArray.every(cell => cell.innerHTML.length > 0 && !winnerIsFound)
-  
-  if(tie) {
-    winnerIsFound = true;
-    whoIsPlayingParagraph.style.color = "red";
-    whoIsPlayingParagraph.innerText =`It's a tie!`;
-    gameStartedParagraph.remove()
-  }
 
-}
+  if(findWinningPLayer) return `Player ${player} has won! The game is now over`;
 
-const determineWinningPlayer = (cellArray: HTMLTableCellElement[], arrayOfConditions: number[], player: string): boolean | void => {
+  if(tie) return `It's a tie!`;
 
-  const matchPLayer: boolean = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
-
-  if(matchPLayer) {
-    whoIsPlayingParagraph.style.color = "red";
-    whoIsPlayingParagraph.innerText =`Player ${player} has won! The game is now over`;
-    gameStartedParagraph.remove()
-    return true
-  }
+  return "";
 
 } 
 
@@ -82,9 +73,7 @@ for(let row of board.rows) {
             typedCell.innerText = playerTwo;
           }
         }
-
         determineWinner(winningConditionArray, cellArray)
-        determineTie(cellArray)
       })
   }
 }
