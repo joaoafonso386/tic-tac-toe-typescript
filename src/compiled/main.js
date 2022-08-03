@@ -1,20 +1,9 @@
-import { globals } from "./globals.js";
-const { board } = globals.DOM;
-// const board: HTMLTableElement = document.querySelector(".board");
-const startButton = document.querySelector(".start-game");
-const gameStartedParagraph = document.createElement("p");
-const infoParagraph = document.createElement("p");
-const whoIsPlayingParagraph = document.createElement("li");
-let cellArray = [];
-const playerOne = "X";
-const playerTwo = "O";
-let playerOnePlays = 0;
-let playerTwoPlays = 0;
-let isInGameMode = false;
-let winnerIsFound = false;
-const horizontalWinner = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
-const verticalWinner = [[0, 3, 6], [1, 4, 7], [2, 5, 8]];
-const diagonalWinner = [[0, 4, 8], [2, 4, 6]];
+import { globals } from "./scripts/globals.js";
+const { board, startButton, gameStartedParagraph, infoParagraph, whoIsPlayingParagraph, cellArray, } = globals.DOM;
+const { playerOne, playerTwo } = globals.players;
+let { playerOnePlays, playerTwoPlays } = globals.plays;
+let { isInGameMode, winnerIsFound } = globals.controlVariables;
+const winningConditionArray = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 const determineWinner = (winningConditionArray, cellArray) => {
     return winningConditionArray.some(conditionArray => {
         const playerOneWins = determineWinningPlayer(cellArray, conditionArray, playerOne);
@@ -64,16 +53,14 @@ for (let row of board.rows) {
                     typedCell.innerText = playerTwo;
                 }
             }
-            determineWinner(horizontalWinner, cellArray);
-            determineWinner(verticalWinner, cellArray);
-            determineWinner(diagonalWinner, cellArray);
+            determineWinner(winningConditionArray, cellArray);
             determineTie(cellArray);
         });
     }
 }
 startButton.onclick = () => {
     if (isInGameMode || winnerIsFound) {
-        const shouldGameEnd = confirm("Do you want to end the game?");
+        const shouldGameEnd = confirm("Do you want to reset the board?");
         if (shouldGameEnd)
             window.location.reload();
     }

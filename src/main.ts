@@ -1,22 +1,19 @@
-import { globals } from "./globals.js";
+import { globals } from "./scripts/globals.js";
 
-const { board } = globals.DOM;
+const { 
+  board, 
+  startButton, 
+  gameStartedParagraph, 
+  infoParagraph,
+  whoIsPlayingParagraph,
+  cellArray,
+} = globals.DOM;
 
-// const board: HTMLTableElement = document.querySelector(".board");
-const startButton: HTMLInputElement = document.querySelector(".start-game");
-const gameStartedParagraph: HTMLParagraphElement = document.createElement("p");
-const infoParagraph: HTMLParagraphElement = document.createElement("p");
-const whoIsPlayingParagraph: HTMLLIElement = document.createElement("li");
-let cellArray: HTMLTableCellElement[] = [];
-const playerOne: string = "X";
-const playerTwo: string = "O";
-let playerOnePlays: number = 0;
-let playerTwoPlays: number = 0;
-let isInGameMode: boolean = false;
-let winnerIsFound: boolean = false;
-const horizontalWinner: number[][] = [[0,1,2],[3,4,5],[6,7,8]];
-const verticalWinner: number[][] = [[0,3,6],[1,4,7],[2,5,8]];
-const diagonalWinner: number[][] = [[0,4,8],[2,4,6]];
+const { playerOne, playerTwo } = globals.players;
+let { playerOnePlays, playerTwoPlays } = globals.plays;
+let { isInGameMode, winnerIsFound } = globals.controlVariables;
+
+const winningConditionArray: number[][] = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
 
 const determineWinner = (winningConditionArray: number[][], cellArray: HTMLTableCellElement[]): boolean => {
@@ -85,9 +82,7 @@ for(let row of board.rows) {
           }
         }
 
-        determineWinner(horizontalWinner, cellArray)
-        determineWinner(verticalWinner, cellArray)
-        determineWinner(diagonalWinner, cellArray)
+        determineWinner(winningConditionArray, cellArray)
         determineTie(cellArray)
       })
   }
@@ -97,7 +92,7 @@ for(let row of board.rows) {
 startButton.onclick = () => {
 
   if(isInGameMode || winnerIsFound) {
-    const shouldGameEnd: boolean = confirm("Do you want to end the game?");
+    const shouldGameEnd: boolean = confirm("Do you want to reset the board?");
     if(shouldGameEnd) window.location.reload();
   } else {
     const rulesList = board.previousElementSibling as HTMLElement;
