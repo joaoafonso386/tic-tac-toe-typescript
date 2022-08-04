@@ -1,61 +1,10 @@
 import { globals } from "./scripts/globals.js";
+import { determineWinner } from "./scripts/functions/functions.js";
 const { board, startButton, gameStartedParagraph, infoParagraph, whoIsPlayingParagraph, cellArray, } = globals.DOM;
 const { playerOne, playerTwo } = globals.players;
 const winningConditions = globals.winningConditions;
 let { playerOnePlays, playerTwoPlays } = globals.plays;
 let { isInGameMode, winnerIsFound } = globals.controlVariables;
-const winningVariables = {
-    DOM: {
-        cellArray,
-        whoIsPlayingParagraph,
-        gameStartedParagraph
-    },
-    players: {
-        playerOne,
-        playerTwo
-    },
-    plays: {
-        playerOnePlays,
-        playerTwoPlays
-    },
-    winningConditions
-};
-const determineWinner = ({ DOM, players, winningConditions }) => {
-    const { cellArray, whoIsPlayingParagraph, gameStartedParagraph } = DOM;
-    const { playerOne, playerTwo } = players;
-    return winningConditions.some(conditionArray => {
-        const playerOneWins = conditionArray.every(number => cellArray[number].textContent === playerOne);
-        const playerTwoWins = conditionArray.every(number => cellArray[number].textContent === playerTwo);
-        const tie = playerOnePlays + playerTwoPlays === 9 && !playerOneWins && !playerTwoWins;
-        if (playerOneWins) {
-            whoIsPlayingParagraph.innerText = `Player ${playerOne} has won! The game is now over`;
-        }
-        if (playerTwoWins) {
-            whoIsPlayingParagraph.innerText = `Player ${playerTwo} has won! The game is now over`;
-        }
-        if (tie) {
-            whoIsPlayingParagraph.innerText = "Its tie!";
-            whoIsPlayingParagraph.style.color = "red";
-            gameStartedParagraph.remove();
-        }
-        if (playerTwoWins || playerOneWins) {
-            whoIsPlayingParagraph.style.color = "red";
-            gameStartedParagraph.remove();
-            return true;
-        }
-    });
-};
-// const determineWinningPlayerOrTie = (cellArray: HTMLTableCellElement[], conditionArray: number[], player?: string): string => {
-//   const findWinningPLayer: boolean = conditionArray.every(number => cellArray[number].textContent === player);
-//   const findTie: boolean = cellArray.every(cell => cell.textContent.length > 0);
-//   if(findWinningPLayer){
-//     return `Player ${player} has won! The game is now over`;
-//   } 
-//   if(findTie && !findWinningPLayer) {
-//     return `It's a tie!`;
-//   }
-//   return "";
-// }
 for (let row of board.rows) {
     for (let cell of row.children) {
         const typedCell = cell;
@@ -78,6 +27,22 @@ for (let row of board.rows) {
                     typedCell.innerText = playerTwo;
                 }
             }
+            const winningVariables = {
+                DOM: {
+                    cellArray,
+                    whoIsPlayingParagraph,
+                    gameStartedParagraph
+                },
+                players: {
+                    playerOne,
+                    playerTwo
+                },
+                plays: {
+                    playerOnePlays,
+                    playerTwoPlays
+                },
+                winningConditions
+            };
             if (determineWinner(winningVariables)) {
                 winnerIsFound = true;
                 return;
