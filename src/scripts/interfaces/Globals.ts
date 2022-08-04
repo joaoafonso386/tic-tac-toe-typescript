@@ -17,7 +17,7 @@ interface Globals {
     playerTwoPlays: number
   }
   winningConditions: number[][]
-  controlVariables: {
+  controlVariables?: {
     isInGameMode?: boolean,
     winnerIsFound: boolean
   }

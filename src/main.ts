@@ -27,9 +27,9 @@ const winningVariables: Globals = {
     playerOne,
     playerTwo
   },
-  controlVariables: {
-    winnerIsFound,
-    isInGameMode
+  plays: {
+    playerOnePlays,
+    playerTwoPlays
   },
   winningConditions
 }

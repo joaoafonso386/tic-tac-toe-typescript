@@ -14,9 +14,9 @@ const winningVariables = {
         playerOne,
         playerTwo
     },
-    controlVariables: {
-        winnerIsFound,
-        isInGameMode
+    plays: {
+        playerOnePlays,
+        playerTwoPlays
     },
     winningConditions
 };
