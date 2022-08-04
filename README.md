@@ -1,7 +1,4 @@
-# Tic Tac Toe Game
-
-### Project written in vanilla typescript
-
+# Tic Tac Toe Game - Written in vanilla typescript
 ### GOALS
 - Practice programming logic by creating my own custom tic tac toe solution  
 - Work with types as much as possible
