@@ -4,50 +4,58 @@ const { playerOne, playerTwo } = globals.players;
 const winningConditions = globals.winningConditions;
 let { playerOnePlays, playerTwoPlays } = globals.plays;
 let { isInGameMode, winnerIsFound } = globals.controlVariables;
-// const winningVariables: Globals = {
-//   DOM: {
-//     cellArray,
-//     whoIsPlayingParagraph,
-//     gameStartedParagraph
-//   },
-//   players: {
-//     playerOne,
-//     playerTwo
-//   },
-//   controlVariables: {
-//     winnerIsFound,
-//     isInGameMode
-//   },
-//   winningConditions
-// }
-const determineWinner = () => {
-    // const { cellArray, whoIsPlayingParagraph, gameStartedParagraph } = DOM;
-    // const { playerOne, playerTwo } = players;
-    // let { winnerIsFound } = controlVariables
+const winningVariables = {
+    DOM: {
+        cellArray,
+        whoIsPlayingParagraph,
+        gameStartedParagraph
+    },
+    players: {
+        playerOne,
+        playerTwo
+    },
+    controlVariables: {
+        winnerIsFound,
+        isInGameMode
+    },
+    winningConditions
+};
+const determineWinner = ({ DOM, players, winningConditions }) => {
+    const { cellArray, whoIsPlayingParagraph, gameStartedParagraph } = DOM;
+    const { playerOne, playerTwo } = players;
     return winningConditions.some(conditionArray => {
-        const playerOneWins = determineWinningPlayerOrTie(cellArray, conditionArray, playerOne);
-        const playerTwoWins = determineWinningPlayerOrTie(cellArray, conditionArray, playerTwo);
-        const tie = determineWinningPlayerOrTie(cellArray, conditionArray);
-        if (tie || playerTwoWins || playerOneWins) {
-            winnerIsFound = true;
+        const playerOneWins = conditionArray.every(number => cellArray[number].textContent === playerOne);
+        const playerTwoWins = conditionArray.every(number => cellArray[number].textContent === playerTwo);
+        const tie = playerOnePlays + playerTwoPlays === 9 && !playerOneWins && !playerTwoWins;
+        if (playerOneWins) {
+            whoIsPlayingParagraph.innerText = `Player ${playerOne} has won! The game is now over`;
+        }
+        if (playerTwoWins) {
+            whoIsPlayingParagraph.innerText = `Player ${playerTwo} has won! The game is now over`;
+        }
+        if (tie) {
+            whoIsPlayingParagraph.innerText = "Its tie!";
             whoIsPlayingParagraph.style.color = "red";
             gameStartedParagraph.remove();
-            whoIsPlayingParagraph.innerText = playerOneWins || playerTwoWins || tie;
-            return;
+        }
+        if (playerTwoWins || playerOneWins) {
+            whoIsPlayingParagraph.style.color = "red";
+            gameStartedParagraph.remove();
+            return true;
         }
     });
 };
-const determineWinningPlayerOrTie = (cellArray, arrayOfConditions, player) => {
-    const findWinningPLayer = arrayOfConditions.every(number => cellArray[number].innerHTML === player);
-    const findTie = cellArray.every(cell => cell.innerHTML.length > 0 && !winnerIsFound);
-    if (findWinningPLayer) {
-        return `Player ${player} has won! The game is now over`;
-    }
-    if (findTie) {
-        return `It's a tie!`;
-    }
-    return "";
-};
+// const determineWinningPlayerOrTie = (cellArray: HTMLTableCellElement[], conditionArray: number[], player?: string): string => {
+//   const findWinningPLayer: boolean = conditionArray.every(number => cellArray[number].textContent === player);
+//   const findTie: boolean = cellArray.every(cell => cell.textContent.length > 0);
+//   if(findWinningPLayer){
+//     return `Player ${player} has won! The game is now over`;
+//   } 
+//   if(findTie && !findWinningPLayer) {
+//     return `It's a tie!`;
+//   }
+//   return "";
+// }
 for (let row of board.rows) {
     for (let cell of row.children) {
         const typedCell = cell;
@@ -70,7 +78,10 @@ for (let row of board.rows) {
                     typedCell.innerText = playerTwo;
                 }
             }
-            determineWinner();
+            if (determineWinner(winningVariables)) {
+                winnerIsFound = true;
+                return;
+            }
         });
     }
 }

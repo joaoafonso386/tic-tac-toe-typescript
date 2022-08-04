@@ -1,23 +1,21 @@
 import { Globals } from "../interfaces/Globals";
 
-const determineWinner = ({ DOM, players, controlVariables, winningConditions }: Globals): boolean | void => {
+const determineWinner = ({ DOM, players, winningConditions }: Globals): boolean | void => {
 
   const { cellArray, whoIsPlayingParagraph, gameStartedParagraph } = DOM;
   const { playerOne, playerTwo } = players;
-  let { winnerIsFound } = controlVariables
-
-  return winningConditions.some(conditionArray => {
   
+  return winningConditions.some(conditionArray => {
+
     const playerOneWins: string  = determineWinningPlayerOrTie(cellArray, conditionArray, playerOne);
     const playerTwoWins: string  = determineWinningPlayerOrTie(cellArray, conditionArray, playerTwo);
-    const tie: string = determineWinningPlayerOrTie(cellArray,conditionArray, undefined, winnerIsFound);
+    const tie: string = determineWinningPlayerOrTie(cellArray,conditionArray);
   
     if(tie || playerTwoWins || playerOneWins) {
-      winnerIsFound = true;
       whoIsPlayingParagraph.style.color = "red";
       gameStartedParagraph.remove()
       whoIsPlayingParagraph.innerText = playerOneWins || playerTwoWins || tie
-      return 
+      return true
     }
 
   })

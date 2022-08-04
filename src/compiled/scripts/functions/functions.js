@@ -1,17 +1,15 @@
-const determineWinner = ({ DOM, players, controlVariables, winningConditions }) => {
+const determineWinner = ({ DOM, players, winningConditions }) => {
     const { cellArray, whoIsPlayingParagraph, gameStartedParagraph } = DOM;
     const { playerOne, playerTwo } = players;
-    let { winnerIsFound } = controlVariables;
     return winningConditions.some(conditionArray => {
         const playerOneWins = determineWinningPlayerOrTie(cellArray, conditionArray, playerOne);
         const playerTwoWins = determineWinningPlayerOrTie(cellArray, conditionArray, playerTwo);
-        const tie = determineWinningPlayerOrTie(cellArray, conditionArray, undefined, winnerIsFound);
+        const tie = determineWinningPlayerOrTie(cellArray, conditionArray);
         if (tie || playerTwoWins || playerOneWins) {
-            winnerIsFound = true;
             whoIsPlayingParagraph.style.color = "red";
             gameStartedParagraph.remove();
             whoIsPlayingParagraph.innerText = playerOneWins || playerTwoWins || tie;
-            return;
+            return true;
         }
     });
 };
