@@ -3,9 +3,9 @@
 ***Project written in vanilla typescript***
 
 ***Goals***
-> Practice programming logic by creating my own custom tic tac toe solution  
-> Work with types as much as possible
-> Abstract the code as much as possible to create a clean solution
+- Practice programming logic by creating my own custom tic tac toe solution  
+- Work with types as much as possible
+- Abstract the code as much as possible to create a clean solution
 
 ### RULES ###
 
